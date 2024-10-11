@@ -9,6 +9,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  final SPHelper helper = SPHelper();
   final TextEditingController txtName = TextEditingController();
   final List<String> images = ['Lake', 'Mountain', 'Sea', 'Country'];
   String selectedImage = 'Lake';
@@ -76,16 +77,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<bool> saveSettings() async {
-    final SPHelper helper = SPHelper();
     return await helper.setSettings(txtName.text, selectedImage);
   }
 
   Future getSettings() async {
-    final SPHelper helper = SPHelper();
     Map<String, String> settings = await helper.getSettings();
     selectedImage = settings['image'] ?? 'Country';
     txtName.text = settings['name'] ?? '';
     setState(() {});
     return true;
+  }
+
+  @override
+  void dispose() {
+    txtName.dispose();
+    super.dispose();
   }
 }
