@@ -6,9 +6,6 @@ class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Welcome Screen'),
-      ),
       body: Stack(children: [
         Positioned.fill(
             child: Image.asset(
@@ -19,11 +16,21 @@ class IntroScreen extends StatelessWidget {
           alignment: Alignment(0, -0.5),
           child: Text(
             'Welcome',
-            style: TextStyle(fontSize: 24),
+            style: TextStyle(
+              fontSize: 24,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  blurRadius: 10,
+                  color: Colors.black,
+                  offset: Offset(5, 5),
+                )
+              ],
+            ),
           ),
         ),
         Align(
-          alignment: Alignment(0, 0.5),
+          alignment: const Alignment(0, 0.5),
           child: ElevatedButton(
             onPressed: () {},
             child: const Text('Start'),
