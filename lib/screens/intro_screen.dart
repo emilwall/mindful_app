@@ -56,7 +56,7 @@ class _IntroScreenState extends State<IntroScreen> {
           child: ElevatedButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext ctx) => const SettingsScreen(),
+                builder: (BuildContext ctx) => const QuoteScreen(),
               ));
             },
             child: const Text('Start'),
