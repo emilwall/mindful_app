@@ -21,7 +21,7 @@ class SPHelper {
   Future<Map<String, String>> getSettings() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String name = prefs.getString(keyName) ?? '';
-    final String image = prefs.getString(keyImage) ?? 'Lake';
+    final String image = prefs.getString(keyImage) ?? '';
     return {
       keyName: name,
       keyImage: image,

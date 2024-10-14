@@ -20,7 +20,10 @@ class _IntroScreenState extends State<IntroScreen> {
     final helper = SPHelper();
     helper.getSettings().then((settings) {
       name = settings['name'] ?? '';
-      image = settings['image'] ?? 'Lake';
+      image = settings['image'] ?? '';
+      if (image == '') {
+        image = 'Lake';
+      }
       setState(() {});
     });
   }
