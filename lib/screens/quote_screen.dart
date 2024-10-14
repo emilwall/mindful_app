@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mindful_app/data/db_helper.dart';
 import 'package:mindful_app/screens/settings_screen.dart';
 import 'dart:convert';
 
@@ -86,6 +87,21 @@ class _QuoteScreenState extends State<QuoteScreen> {
               ),
             );
           }
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.save),
+        onPressed: () {
+          DbHelper dbHelper = DbHelper();
+          dbHelper.insertQuote(quote).then((id) {
+            final message = (id == 0) ? 'Error' : 'Success';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(message),
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          });
+        },
       ),
     );
   }
