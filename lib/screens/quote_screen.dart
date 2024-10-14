@@ -23,6 +23,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mindful Quote'),
@@ -34,9 +35,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
           IconButton(
             onPressed: () {
               _fetchQuote().then((value) {
-                setState(() {
-                  quote = value;
-                });
+                setState(() {});
               });
             },
             icon: const Icon(Icons.refresh),
@@ -57,18 +56,18 @@ class _QuoteScreenState extends State<QuoteScreen> {
             }
             Quote quote = snapshot.data!;
             return GestureDetector(
-              onTap: () => _fetchQuote().then((value) {
-                quote = value;
+              onTap: () => _fetchQuote().then((_) {
                 setState(() {});
               }),
               child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: deviceWidth * 0.2),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         quote.text,
+                        textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 24,
                           fontStyle: FontStyle.italic,
