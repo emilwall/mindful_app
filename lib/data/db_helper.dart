@@ -1,6 +1,5 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
-import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'quote.dart';
 
@@ -30,8 +29,20 @@ class DbHelper {
     Database db = await _openDb();
     final finder = Finder(sortOrders: [SortOrder('a')]);
     final snapshot = await store.find(db, finder: finder);
-    return snapshot
-        .map((item) => Quote.fromJSON(item.value, item.key))
+    final quotes = snapshot
+        .map((item) => Quote.fromJSON(item.value, key: item.key))
         .toList();
+    return quotes;
+  }
+
+  Future<int?> removeQuote(Quote quote) async {
+    try {
+      Database db = await _openDb();
+      Finder finder = Finder(filter: Filter.equals('q', quote.text));
+      int removed = await store.delete(db, finder: finder);
+      return removed;
+    } on Exception catch (_) {
+      return null;
+    }
   }
 }

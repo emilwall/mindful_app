@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mindful_app/data/db_helper.dart';
+import 'package:mindful_app/data/quote.dart';
+import 'package:mindful_app/screens/quotes_list_screen.dart';
 import 'package:mindful_app/screens/settings_screen.dart';
 import 'dart:convert';
-
-import '../data/quote.dart';
 
 class QuoteScreen extends StatefulWidget {
   const QuoteScreen({super.key});
@@ -34,6 +34,10 @@ class _QuoteScreenState extends State<QuoteScreen> {
             icon: const Icon(Icons.settings),
           ),
           IconButton(
+            onPressed: _goToList,
+            icon: const Icon(Icons.list),
+          ),
+          IconButton(
             onPressed: () {
               _fetchQuote().then((value) {
                 setState(() {});
@@ -55,7 +59,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
                 child: Text('Error; ${snapshot.error}'),
               );
             }
-            Quote quote = snapshot.data!;
+            quote = snapshot.data!;
             return GestureDetector(
               onTap: () => _fetchQuote().then((_) {
                 setState(() {});
@@ -123,6 +127,15 @@ class _QuoteScreenState extends State<QuoteScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => const SettingsScreen(),
+      ),
+    );
+  }
+
+  void _goToList() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const QuotesListScreen(),
       ),
     );
   }
