@@ -18,8 +18,10 @@ class _IntroScreenState extends State<IntroScreen> {
     super.initState();
     final helper = SPHelper();
     helper.getSettings().then((settings) {
-      name = settings['name'] ?? '';
-      image = settings['image'] ?? '';
+      if (settings != null) {
+        name = settings[SPHelper.keyName] ?? '';
+        image = settings[SPHelper.keyImage] ?? '';
+      }
       if (image == '') {
         image = 'Lake';
       }

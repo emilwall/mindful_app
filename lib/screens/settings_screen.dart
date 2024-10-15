@@ -17,12 +17,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    getSettings().then((value) {
+    _getSettings().then((value) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('The settings were ${value ? '' : 'not '}fetched'),
-          duration: const Duration(seconds: 3),
-        ));
+        _showSnackBar(context, value);
       }
     });
   }
@@ -62,10 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         onPressed: () {
           helper.setSettings(txtName.text, selectedImage).then((value) {
             if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text('The settings were ${value ? '' : 'not '}saved'),
-                duration: const Duration(seconds: 3),
-              ));
+              _showSnackBar(context, value);
             }
           });
         },
@@ -74,10 +68,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Future getSettings() async {
-    Map<String, String> settings = await helper.getSettings();
-    selectedImage = settings['image'] ?? '';
-    txtName.text = settings['name'] ?? '';
+  void _showSnackBar(BuildContext context, bool success) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('The settings were ${success ? '' : 'not '}saved'),
+      duration: const Duration(seconds: 3),
+    ));
+  }
+
+  Future<bool> _getSettings() async {
+    final settings = await helper.getSettings();
+    if (settings == null) {
+      return false;
+    }
+    selectedImage = settings[SPHelper.keyImage] ?? '';
+    txtName.text = settings[SPHelper.keyName] ?? '';
     if (selectedImage == '') {
       selectedImage = 'Lake';
     }
