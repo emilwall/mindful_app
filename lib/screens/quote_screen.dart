@@ -32,11 +32,11 @@ class _QuoteScreenState extends State<QuoteScreen> {
         title: const Text('Mindful Quote'),
         actions: [
           IconButton(
-            onPressed: _goToSettings,
+            onPressed: _goTo('settings'),
             icon: const Icon(Icons.settings),
           ),
           IconButton(
-            onPressed: _goToList,
+            onPressed: _goTo('list'),
             icon: const Icon(Icons.list),
           ),
           IconButton(
@@ -121,25 +121,18 @@ class _QuoteScreenState extends State<QuoteScreen> {
       Quote quote = Quote.fromJSON(quoteJson[0]);
       return quote;
     } else {
-      return Quote(text: 'Error retrieveing quote', author: '');
+      return Quote(text: 'Error retrieving quote', author: 'Too many requests');
     }
   }
 
-  void _goToSettings() {
+  VoidCallback _goTo(String page) => () =>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const SettingsScreen(),
-      ),
-    );
-  }
-
-  void _goToList() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const QuotesListScreen(),
-      ),
-    );
-  }
+          builder: (context) => switch (page) {
+                'settings' => const SettingsScreen(),
+                'list' => const QuotesListScreen(),
+                _ => const QuotesListScreen(),
+              }
+      ));
 }
