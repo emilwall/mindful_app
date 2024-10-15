@@ -14,7 +14,7 @@ class QuoteScreen extends StatefulWidget {
 }
 
 class _QuoteScreenState extends State<QuoteScreen> {
-  static const adress = 'https://zenquotes.io/api/random';
+  static const adress = 'https://mindfulapp-api.azurewebsites.net/api/random';
   Quote quote = Quote(text: '', author: '');
 
   @override
