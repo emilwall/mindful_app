@@ -1,11 +1,12 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:sembast_web/sembast_web.dart';
+import 'package:sembast/sembast_io.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'quote.dart';
 
 class DbHelper {
-  DatabaseFactory dbFactory = databaseFactoryWeb;
+  DatabaseFactory dbFactory = kIsWeb ? databaseFactoryWeb : databaseFactoryIo;
   Database? database;
   final store = intMapStoreFactory.store('quotes');
   static final DbHelper _instance = DbHelper._internal();

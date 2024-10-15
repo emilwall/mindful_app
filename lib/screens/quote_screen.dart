@@ -116,12 +116,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
   }
 
   Future _fetchQuote() async {
-    final isLocalhost = Uri.base.authority.contains('localhost');
-    final baseUrl = kIsWeb
-        ? isLocalhost
-            ? 'http://localhost:7071'
-            : Uri.base
-        : zenUrl;
+    final baseUrl = kIsWeb ? Uri.base : zenUrl;
     final Uri apiUrl = Uri.parse('$baseUrl/api/random');
     http.Response response;
     try {
