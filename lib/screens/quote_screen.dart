@@ -61,7 +61,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
                 child: Text('Error; ${snapshot.error}'),
               );
             }
-            quote = snapshot.data!;
+            quote = snapshot.data ?? Quote(text: '', author: '');
             return GestureDetector(
               onTap: () => _fetchQuote().then((_) {
                 setState(() {});
@@ -99,13 +99,15 @@ class _QuoteScreenState extends State<QuoteScreen> {
         onPressed: () {
           DbHelper dbHelper = DbHelper();
           dbHelper.insertQuote(quote).then((id) {
-            final message = (id == 0) ? 'Error' : 'Success';
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(message),
-                duration: const Duration(seconds: 3),
-              ),
-            );
+            if (context.mounted) {
+              final message = (id == 0) ? 'Error' : 'Success';
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(message),
+                  duration: const Duration(seconds: 3),
+                ),
+              );
+            }
           });
         },
       ),

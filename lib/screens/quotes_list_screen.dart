@@ -22,7 +22,7 @@ class QuotesListScreen extends StatelessWidget {
                 child: Text('Error ${snapshot.error}'),
               );
             } else {
-              for (Quote quote in snapshot.data!) {
+              for (Quote quote in snapshot.data ?? []) {
                 tiles.add(
                   Dismissible(
                     key: Key(quote.id.toString()),

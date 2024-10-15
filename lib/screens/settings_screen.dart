@@ -17,15 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    getSettings().then((value) {
-      String message = value
-          ? 'The settings have been fetched'
-          : 'The settings were not fetched';
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 3),
-      ));
-    });
+    getSettings();
   }
   
   @override
@@ -52,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   .toList(),
               onChanged: (newValue) {
                 setState(() {
-                  selectedImage = newValue!;
+                  selectedImage = newValue ?? images.first;
                 });
               },
             )
@@ -61,23 +53,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          saveSettings().then((value) {
-            String message = value
-                ? 'The settings have been saved'
-                : 'The settings were not saved';
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(message),
-              duration: const Duration(seconds: 3),
-            ));
+          helper.setSettings(txtName.text, selectedImage).then((value) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('The settings were ${value ? '' : 'not '}saved'),
+                duration: const Duration(seconds: 3),
+              ));
+            }
           });
         },
         child: const Icon(Icons.save),
       ),
     );
-  }
-
-  Future<bool> saveSettings() async {
-    return await helper.setSettings(txtName.text, selectedImage);
   }
 
   Future getSettings() async {
