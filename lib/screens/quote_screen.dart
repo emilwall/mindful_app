@@ -4,6 +4,7 @@ import 'package:mindful_app/data/db_helper.dart';
 import 'package:mindful_app/data/quote.dart';
 import 'package:mindful_app/screens/quotes_list_screen.dart';
 import 'package:mindful_app/screens/settings_screen.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:convert';
 
 class QuoteScreen extends StatefulWidget {
@@ -14,7 +15,8 @@ class QuoteScreen extends StatefulWidget {
 }
 
 class _QuoteScreenState extends State<QuoteScreen> {
-  static const adress = 'https://brave-flower-0b4a40203.5.azurestaticapps.net/';
+  static const webUrl = 'https://brave-flower-0b4a40203.5.azurestaticapps.net';
+  static const zenUrl = 'https://zenquotes.io';
   Quote quote = Quote(text: '', author: '');
 
   @override
@@ -111,7 +113,8 @@ class _QuoteScreenState extends State<QuoteScreen> {
   }
 
   Future _fetchQuote() async {
-    final Uri apiUrl = Uri.parse('${adress}api/random');
+    var baseUrl = kIsWeb ? webUrl : zenUrl;
+    final Uri apiUrl = Uri.parse('$baseUrl/api/random');
     final response = await http.get(apiUrl);
     if (response.statusCode == 200) {
       final List quoteJson = json.decode(response.body);

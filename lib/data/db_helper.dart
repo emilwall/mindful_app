@@ -32,7 +32,12 @@ class DbHelper {
   Future<int> insertQuote(Quote quote) async {
     try {
       Database db = await _database;
-      int id = await store.add(db, quote.toMap());
+      final finder = Finder(filter: Filter.equals('q', quote.text));
+      final snapshot = await store.find(db, finder: finder);
+      if (snapshot.isNotEmpty) {
+        return snapshot[0].key;
+      }
+      final id = await store.add(db, quote.toMap());
       return id;
     } on Exception catch (_) {
       return 0;
@@ -52,8 +57,10 @@ class DbHelper {
   Future<int?> removeQuote(Quote quote) async {
     try {
       Database db = await _database;
-      Finder finder = Finder(filter: Filter.equals('q', quote.text));
-      int removed = await store.delete(db, finder: finder);
+      if (quote.id == null) {
+        return null;
+      }
+      final removed = store.record(quote.id!).delete(db);
       return removed;
     } on Exception catch (_) {
       return null;

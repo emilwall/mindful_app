@@ -12,12 +12,10 @@ public static class Random
 {
     [FunctionName("random")]
     public static async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest _,
         ILogger log)
     {
         log.LogInformation("C# HTTP trigger function processed a request.");
-
-        //req.Path = new PathString("https://zenquotes.io/api/random");
 
         var httpClient = new HttpClient(); // Risk of running out of sockets?
         var response = await httpClient.GetAsync("https://zenquotes.io/api/random");
