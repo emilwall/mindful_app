@@ -15,7 +15,7 @@ class SPHelper {
       ]);
       return true;
     } on Exception catch (e) {
-      log('Error ${e.toString()}');
+      log('Error ${e.toString()}', error: e);
       return false;
     }
   }
@@ -30,7 +30,7 @@ class SPHelper {
         keyImage: image,
       };
     } on Exception catch (e) {
-      log('Error ${e.toString()}');
+      log('Error ${e.toString()}', error: e);
       return null;
     }
   }

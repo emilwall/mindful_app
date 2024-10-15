@@ -2,12 +2,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach to PowerShell Functions",
-            "type": "PowerShell",
-            "request": "attach",
-            "customPipeName": "AzureFunctionsPSWorker",
-            "runspaceId": 1,
-            "preLaunchTask": "func: host start"
+            "name": "Flutter",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart"
         },
         {
             "name": "Attach to .NET Functions",

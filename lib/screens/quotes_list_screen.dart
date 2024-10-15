@@ -12,7 +12,7 @@ class QuotesListScreen extends StatelessWidget {
         title: const Text('Saved quotes'),
       ),
       body: FutureBuilder(
-          future: getQuotes(),
+          future: _getQuotes(),
           builder: (context, snapshot) {
             final List<Dismissible> tiles = [];
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -45,7 +45,7 @@ class QuotesListScreen extends StatelessWidget {
     );
   }
 
-  Future<List<Quote>> getQuotes() async {
+  Future<List<Quote>> _getQuotes() async {
     DbHelper dbHelper = DbHelper();
     final quotes = await dbHelper.getQuotes();
     return quotes;

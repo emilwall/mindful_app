@@ -12,7 +12,7 @@ public static class Random
 {
     [FunctionName("random")]
     public static async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest _,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
         ILogger log)
     {
         log.LogInformation("C# HTTP trigger function processed a request.");
