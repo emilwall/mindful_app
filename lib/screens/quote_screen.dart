@@ -14,7 +14,7 @@ class QuoteScreen extends StatefulWidget {
 }
 
 class _QuoteScreenState extends State<QuoteScreen> {
-  static const adress = 'https://mindfulapp-api.azurewebsites.net/api/random';
+  static const adress = 'https://brave-flower-0b4a40203.5.azurestaticapps.net/';
   Quote quote = Quote(text: '', author: '');
 
   @override
@@ -111,7 +111,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
   }
 
   Future _fetchQuote() async {
-    final Uri apiUrl = Uri.parse(adress);
+    final Uri apiUrl = Uri.parse('${adress}api/random');
     final response = await http.get(apiUrl);
     if (response.statusCode == 200) {
       final List quoteJson = json.decode(response.body);
