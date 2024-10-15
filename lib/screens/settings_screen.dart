@@ -17,7 +17,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    getSettings();
+    getSettings().then((value) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('The settings were ${value ? '' : 'not '}fetched'),
+          duration: const Duration(seconds: 3),
+        ));
+      }
+    });
   }
   
   @override
